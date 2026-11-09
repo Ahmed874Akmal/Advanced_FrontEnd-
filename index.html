@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blink Communication</title>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Blink Communication</h1>
+  <div class="modes" role="group" aria-label="الشاشة">
+    <button id="mP" aria-pressed="true">شاشة المريض</button>
+    <button id="mD" aria-pressed="false">لوحة المرافق</button>
+  </div>
+</header>
+<main>
+<section id="patient">
+  <div class="stage">
+    <nav class="pages" id="pages"></nav>
+    <span class="mode-note">غمزة يمين: التالي · غمزة يسار: السابق · رمشة طويلة: تأكيد</span>
+  </div>
+  <div id="view"></div>
+  <button class="tile sos" data-sel id="sos"><span class="ic">🚨</span>نداء طوارئ<small>يدوي · بدون AI</small></button>
+  <p class="hint">وضع تجريبي بدون كاميرا (Mock Input): الأسهم ← → للتنقل، اضغط مطولاً على مسافة `Space` للتأكيد، أو اضغط بالماوس.</p>
+</section>
+
+<section id="dash" class="hide">
+  <p class="note">بيانات تجريبية للعرض. النوم يُستنتج من الكاميرا (إغلاق العين + غياب الحركة)، أما النبض والحرارة فيحتاجان حساسات حقيقية على الـ ESP32. هذه أداة مساعدة وليست جهازًا طبيًا.</p>
+  <div class="dgrid">
+    <div class="panel c4"><h3>نوم الليلة الماضية</h3><p class="sub">من 11:10 م إلى 6:30 ص</p>
+      <div class="big" id="sl">7<span>س</span>20<span>د</span></div>
+      <div class="split"><i style="width:30.5%;background:var(--pri)"></i><i style="width:69.5%;background:var(--hl)"></i></div>
+      <div class="legend"><span><b style="background:var(--pri)"></b>نوم 7س 20د</span><span><b style="background:var(--hl)"></b>صحيان 16س 40د</span></div>
+    </div>
+    <div class="panel c4"><h3>معدل النبض</h3><p class="sub">لحظي، آخر 60 قراءة</p>
+      <div class="big"><b id="hrv">74</b><span>نبضة/د</span></div><span class="chip" id="hrc">طبيعي</span>
+    </div>
+    <div class="panel c4"><h3>درجة الحرارة</h3><p class="sub">آخر قراءة</p>
+      <div class="big"><b id="tv">36.8</b><span>°C</span></div><span class="chip" id="tc">طبيعي</span>
+      <div class="demo"><button id="fever">محاكاة ارتفاع الحرارة</button><button id="reset">إعادة</button></div>
+    </div>
+    <div class="panel c7"><h3>ساعات النوم والصحيان آخر 7 أيام</h3><p class="sub">كل عمود = 24 ساعة</p><svg id="wk" viewBox="0 0 560 220"></svg>
+      <div class="legend"><span><b style="background:var(--pri)"></b>نوم</span><span><b style="background:var(--hl)"></b>صحيان</span></div></div>
+    <div class="panel c5"><h3>منحنى النبض</h3><p class="sub">المنطقة المظللة = 50 إلى 110</p><svg id="hr" viewBox="0 0 400 220"></svg></div>
+    <div class="panel c6"><h3>الحرارة خلال اليوم</h3><p class="sub">الحد الطبيعي 36.1 إلى 37.5</p><svg id="tp" viewBox="0 0 480 180"></svg></div>
+    <div class="panel c6"><h3>سجل الأحداث</h3><p class="sub">آخر الأحداث المسجلة</p><ul class="log" id="log"></ul></div>
+  </div>
+</section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
